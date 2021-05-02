@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/edit/{{crash.id}}" method="post">
+    <div class="row">
+        <div class="col">
+            <label for="Day_of_Week">Day of Week</label>
+            <input id="Day_of_Week" type="text" class="form-control" placeholder="Day of Week Name" name="Day_of_Week" value="{{crash.Day_of_week}}">
+        </div>
+        <div class="col">
+            <label for="Number_of_Crashes">Number of Crashes</label>
+            <input id="Number_of_Crashes" type="text" class="form-control" placeholder="Number of Crashes"
+                   name="Number_of_Crashes" value="{{crash.Number_of_Crashes}}">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+
+</form>
+{% endblock %}

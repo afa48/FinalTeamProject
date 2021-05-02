@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="card" class="m-5 p-2">
+    <h5 class="card-title">{{ crash.Day_of_Week }} - {{ crash.fldAbbreviation }}</h5>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Day of the Week: {{ crash.Day_of_Week }}</li>
+        <li class="list-group-item">Number of Crashes: {{ crash.Number_of_Crashes }}</li>
+    </ul>
+    <div class="card-body">
+        <a href="/edit/{{crash.id}}" class="card-link btn btn-primary">edit</a>
+    </div>
+</div>
+<form action="/delete/{{crash.id}}" method="post"><button type="submit" class="btn btn-danger">Delete</button></form>
+
+
+{% endblock %}
