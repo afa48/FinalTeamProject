@@ -15,15 +15,10 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'crashesData'
 mysql.init_app(app)
 
-@app.route("/")
-def chart():
-    labels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    Values = [13664, 17279, 17337, 17394, 17954, 19147, 15714]
-    return render_template('chart.html', values=values, labels=labels)
 
 @app.route('/', methods=['GET'])
 def index():
-    user = {'username': '# of Car Crashes in Catalonia, Spain: 2000 - 2011'}
+    user = {'username': 'Number of Car Crashes in Catalonia from 2000 to 2011'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM crash_catalonia')
     result = cursor.fetchall()
@@ -37,6 +32,9 @@ def record_view(crash_id):
     result = cursor.fetchall()
     return render_template('view.html', title='View Form', crash=result[0])
 
+@app.route('/view/chart', methods=['GET'])
+def display_chart():
+    return render_template('chart.html', title='Chart of Crashes')
 
 @app.route('/edit/<int:crash_id>', methods=['GET'])
 def form_edit_get(crash_id):
