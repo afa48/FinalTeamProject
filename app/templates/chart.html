@@ -8,14 +8,14 @@
 
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+var ctx = document.getElementById('myChart').getContext('2d')
+var option = {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [13664, 17279, 17337, 17394, 17954, 19147, 15714],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -41,7 +41,11 @@ var myChart = new Chart(ctx, {
                 beginAtZero: true
             }
         }
-    }
-});
+    }}
+
+var myChart = new Chart(ctx,option);
+
+myChart.clear();
+
 </script>
 {% endblock %}

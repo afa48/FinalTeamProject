@@ -32,10 +32,6 @@ def record_view(crash_id):
     result = cursor.fetchall()
     return render_template('view.html', title='View Form', crash=result[0])
 
-@app.route('/view/chart', methods=['GET'])
-def display_chart():
-    return render_template('chart.html', title='Chart of Crashes')
-
 @app.route('/edit/<int:crash_id>', methods=['GET'])
 def form_edit_get(crash_id):
     cursor = mysql.get_db().cursor()
@@ -130,6 +126,19 @@ def api_delete(crash_id) -> str:
     mysql.get_db().commit()
     resp = Response(status=200, mimetype='application/json')
     return resp
+
+
+@app.route('/view/chart', methods=['GET'])
+def display_chart():
+    return render_template('chart.html', title='Chart of Crashes')
+
+@app.route('/edit/<int:chart_id>', methods=['GET'])
+def chart_edit_get(chart_id):
+    print("Labels", )
+
+
+
+
 
 
 if __name__ == '__main__':
