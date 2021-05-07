@@ -127,18 +127,14 @@ def api_delete(crash_id) -> str:
     resp = Response(status=200, mimetype='application/json')
     return resp
 
-
 @app.route('/view/chart', methods=['GET'])
 def display_chart():
-    return render_template('chart.html', title='Chart of Crashes')
-
-@app.route('/edit/<int:chart_id>', methods=['GET'])
-def chart_edit_get(chart_id):
-    print("Labels", )
-
-
-
-
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM crash_catalonia')
+    result = cursor.fetchall()
+    json_result = json.dumps(result);
+    resp = Response(json_result, status=200, mimetype='application/json')
+    return render_template('chart.html', title='Chart of Crashes', dataSet= resp)
 
 
 if __name__ == '__main__':
