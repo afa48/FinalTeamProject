@@ -25,6 +25,7 @@ def index():
     return render_template('index.html', title='Home', user=user, crashes=result)
 
 
+
 @app.route('/view/<int:crash_id>', methods=['GET'])
 def record_view(crash_id):
     cursor = mysql.get_db().cursor()
@@ -133,8 +134,7 @@ def display_chart():
     cursor.execute('SELECT * FROM crash_catalonia')
     result = cursor.fetchall()
     json_result = json.dumps(result);
-    resp = Response(json_result, status=200, mimetype='application/json')
-    return render_template('chart.html', title='Chart of Crashes', dataSet= resp)
+    return render_template('chart.html', title='Chart of Crashes', dataSet=result)
 
 
 if __name__ == '__main__':

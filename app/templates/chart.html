@@ -1,35 +1,40 @@
 {% extends "layout.html" %}
 {% block content %}
-<table class="chart">
-    <thead>
-        <tr>
-            <th scope="col">Day of Week</th>
-            <th scope="col">Number of Crashes</th>
-        </tr>
-    </thead>
 
-    <tbody>
-    {% for crash in crashes %}
-        <tr>
-            <td><a href="view/{{crash.id}}">{{crash.Day_of_Week}}</a></td>
-            <td>{{ crash.Number_of_Crashes }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<script>
+    list = ['a','b','c','d','e'] // all the days of the week
 
 
+    numberOfCrashes = []
+    var testingLength = '{{dataSet.length}}'
+    console.log("length: " + testingLength);
+    var stuff = '{{dataSet[3].Day_of_Week}}'
+    console.log(stuff)
+    var dataSet1 = '{{dataSet[0]}}' // sunday
+    var dataSet2 = '{{dataSet[1]}}' // monday
+    console.log(dataSet);
 
+    // look into getting the length of the data set
 
+    // once we get the dataset length
+        // run a for loop to get the index of the dataset
+        // grab the day of the week for each index
+        // append each day of the week to a list
+        // insert that list into chart.js javascript JSON element tag named "labels"
+    // using the same length for the dataset
+        // run a for loop to get the index of the dataset
+        // grab the number of crashes in each index
+        // append each crash record to a list
+        // insert that list into chart.js javascript JSON element tag named "data"
 
+</script>
 
+<h2> This is number of crashes</h2>
+{{dataSet[3].Number_of_Crashes}}
 
+<h2>This is from Result</h2>
+{{dataSet}}
 
-
-
-
-{% extends "layout.html" %}
-{% block content %}
 <title>Chart of Crashes</title>
 <h2>Is this thing on? ... </h2>
 
@@ -37,13 +42,15 @@
 
 <canvas id="myChart" width="400" height="400"></canvas>
 
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d')
+<script type ="text/javascript">
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
 
     var option = {
         type: 'bar',
         data: {
-            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            labels: list,
             datasets: [{
                 label: ['# of crashes'],
                 data: [120, 17279, 17337, 17394, 17954, 19147, 15714],
@@ -74,7 +81,7 @@
             }
         }}
 
-    console.log(crash.Day_of_Week[0])
+
     var myChart = new Chart(ctx,option);
 
 </script>

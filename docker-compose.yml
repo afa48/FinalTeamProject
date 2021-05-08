@@ -1,7 +1,7 @@
 version: "2"
 services:
   app:
-    build: ./app
+    build: ../FinalTeamProjectEmail/app
     container_name: "Flask_App2"
     links:
       - db
