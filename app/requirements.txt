@@ -1,3 +1,7 @@
 Flask
 flask-mysql
 simplejson
+mysql-connector
+flask-sqlalchemy
+pymysql
+sendgrid
