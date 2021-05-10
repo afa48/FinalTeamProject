@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `crash_catalonia` (
     `Number_of_Crashes` INT,
     PRIMARY KEY (`id`)
 );
-
 INSERT INTO `crash_catalonia` (Day_of_Week, Number_of_Crashes) VALUES
     ('Sunday',13664),
     ('Monday',17279),
@@ -16,3 +15,5 @@ INSERT INTO `crash_catalonia` (Day_of_Week, Number_of_Crashes) VALUES
     ('Thursday',17954),
     ('Friday',19147),
     ('Saturday',15714);
+
+-- create another table here for user. (probably just id, email, password)

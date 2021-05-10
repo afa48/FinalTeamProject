@@ -144,6 +144,13 @@ def display_chart():
 #     json_result = json.dumps(result);
 #     return render_template('chart.html', title='Chart of Crashes', dataSet=result)
 
+@app.route('/register', methods=['GET'])
+def register_page():
+    return render_template('register.html', title='Register Form')
+
+@app.route('/api/register', methods=['POST'])
+def api_register() -> str:
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
