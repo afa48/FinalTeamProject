@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+{% block content %}
+<title>Chart of Crashes</title>
+<h2># of Crashes in Catalonia, Spain from 2001-2011 ... </h2>
+
+
+<div class="col-12">
+    <div id="container"></div>
+</div>
+<script src="https://code.highcharts.com/9.1.0/highcharts.js"></script>
+<script>
+    var seriesData = [];
+    var categoriesData = [];
+    fetch('/api/chart')
+        .then(response => response.json())
+        .then(data => {
+            seriesData = [];
+            data.forEach(element => {
+                seriesData.push(element.count)
+                categoriesData.push(element.Day_of_Week);
+            });
+            buildChart();
+        });
+
+    function buildChart() {
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Number of Crashes in Catalonia'
+            },
+            xAxis: {
+                categories: categoriesData,
+                title: {
+                    text: "Day of Week"
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Number of Crashes',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [
+                {
+                    name:"# of crashes",
+                    data: seriesData
+                }
+            ]
+        });
+    }
+
+</script>
+
+
+
+
+<!--<script>-->
+<!--function BuildChart(labels, values, chartTitle) {-->
+<!--  var ctx = document.getElementById("myChart").getContext('2d');-->
+<!--  var myChart = new Chart(ctx, {-->
+<!--    type: 'bar',-->
+<!--    data: {-->
+<!--      labels: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, // Our labels-->
+<!--      datasets: [{-->
+<!--        label: Crashes in Catalonia, // Name the series-->
+<!--        data: 13664, 17279: 17337, 17394: 17954, 19147: 15714, // Our values-->
+<!--        backgroundColor: [ // Specify custom colors-->
+<!--          'rgba(255, 99, 132, 0.2)',-->
+<!--          'rgba(54, 162, 235, 0.2)',-->
+<!--          'rgba(255, 206, 86, 0.2)',-->
+<!--          'rgba(75, 192, 192, 0.2)',-->
+<!--          'rgba(153, 102, 255, 0.2)',-->
+<!--          'rgba(255, 159, 64, 0.2)'-->
+<!--        ],-->
+<!--        borderColor: [ // Add custom color borders-->
+<!--          'rgba(255,99,132,1)',-->
+<!--          'rgba(54, 162, 235, 1)',-->
+<!--          'rgba(255, 206, 86, 1)',-->
+<!--          'rgba(75, 192, 192, 1)',-->
+<!--          'rgba(153, 102, 255, 1)',-->
+<!--          'rgba(255, 159, 64, 1)'-->
+<!--        ],-->
+<!--        borderWidth: 1 // Specify bar border width-->
+<!--      }]-->
+<!--    },-->
+<!--    options: {-->
+<!--      responsive: true, // Instruct chart js to respond nicely.-->
+<!--      maintainAspectRatio: false, // Add to prevent default behavior of full-width/height-->
+<!--    }-->
+<!--  });-->
+<!--  return myChart;-->
+<!--}-->
+<!--</script>-->
+
+
+
+<!--<table class="table" id="dataTable">-->
+<!--  <thead>-->
+<!--    <th>Day of Week</th>-->
+<!--    <th>Number of Crashes</th>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--    <tr>-->
+<!--      <td>Sunday</td>-->
+<!--      <td>13664</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Monday</td>-->
+<!--      <td>17279</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Tuesday</td>-->
+<!--      <td>17337</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Wednesday</td>-->
+<!--      <td>17394</td>-->
+<!--    </tr>-->
+<!--      <tr>-->
+<!--      <td>Thursday</td>-->
+<!--      <td>17954</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Friday</td>-->
+<!--      <td>19147</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>Saturday</td>-->
+<!--      <td>15714</td>-->
+<!--    </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
+
+<!--<div class="chart">-->
+<!--  <canvas id="myChart"></canvas>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--var table = document.getElementById('dataTable');-->
+<!--var json = []]; // First row needs to be headers-->
+<!--var headers =[];-->
+<!--for (var i = 0; i < table.rows[0].cells.length; i++) {-->
+<!--  headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi, '');-->
+<!--}-->
+
+<!--// Go through cells-->
+<!--for (var i = 1; i < table.rows.length; i++) {-->
+<!--  var tableRow = table.rows[i];-->
+<!--  var rowData = {};-->
+<!--  for (var j = 0; j < tableRow.cells.length; j++) {-->
+<!--    rowData[headers[j]] = tableRow.cells[j].innerHTML;-->
+<!--  }-->
+
+<!--  json.push(rowData);-->
+<!--}-->
+
+<!--console.log(json);-->
+
+
+
+<!--// Map JSON values back to label array-->
+<!--var labels = json.map(function (e) {-->
+<!--  return e.Day_of_Week;-->
+<!--});-->
+<!--console.log(labels); // ["2016", "2017", "2018", "2019"]-->
+
+<!--// Map JSON values back to values array-->
+<!--var values = json.map(function (e) {-->
+<!--  return e.Number_of_Crashes;-->
+<!--});-->
+<!--console.log(values); // ["10", "25", "55", "120"]-->
+
+<!--var chart = BuildChart(labels, values, "Number of Crashes in Catalonia");-->
+
+
+
+
+
+<!--</script>-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>-->
+<!--<canvas id="canvas"></canvas>-->
+
+<!--<script>-->
+<!--var jsonfile = {-->
+<!--   "jsonarray": [{-->
+<!--      "Day of Week": "Sunday",-->
+<!--      "Number of Crashes": 13664-->
+<!--   }, {-->
+<!--      "Day of Week": "Saturday",-->
+<!--      "Number of Crashes": 15714-->
+<!--   }]-->
+<!--};-->
+
+<!--var labels = jsonfile.jsonarray.map(function(e) {-->
+<!--   return e.Day_of_Week;-->
+<!--});-->
+<!--var data = jsonfile.jsonarray.map(function(e) {-->
+<!--   return e.Number_of_Crashes;-->
+<!--});;-->
+
+<!--var ctx = canvas.getContext('2d');-->
+<!--var config = {-->
+<!--   type: 'bar',-->
+<!--   data: {-->
+<!--      labels: labels,-->
+<!--      datasets: [{-->
+<!--         label: 'Graph Bar',-->
+<!--         data: data,-->
+<!--         backgroundColor: [-->
+<!--                'rgba(255, 99, 132, 0.2)',-->
+<!--                'rgba(54, 162, 235, 0.2)',-->
+<!--                'rgba(255, 206, 86, 0.2)',-->
+<!--                'rgba(75, 192, 192, 0.2)',-->
+<!--                'rgba(153, 102, 255, 0.2)',-->
+<!--                'rgba(255, 159, 64, 0.2)'-->
+<!--         ],-->
+<!--          borderColor: [-->
+<!--                'rgba(255, 99, 132, 1)',-->
+<!--                'rgba(54, 162, 235, 1)',-->
+<!--                'rgba(255, 206, 86, 1)',-->
+<!--                'rgba(75, 192, 192, 1)',-->
+<!--                'rgba(153, 102, 255, 1)',-->
+<!--                'rgba(255, 159, 64, 1)'-->
+<!--          ],-->
+<!--          borderWidth: 1-->
+<!--      }]-->
+<!--   },-->
+<!--    options: {-->
+<!--        scales: {-->
+<!--            y: {-->
+<!--                beginAtZero: true-->
+<!--            }-->
+<!--        }-->
+<!--    }}-->
+
+<!--var chart = new Chart(ctx, config);-->
+
+
+<!--</script>-->
+{% endblock %}

@@ -137,6 +137,19 @@ def api_delete(crash_id) -> str:
 def display_chart():
     return render_template('chart.html', title='Chart of Crashes')
 
+@app.route('/view/chart1', methods=['GET'])
+def display_chart1():
+    return render_template('chart1.html', title='Chart')
+
+@app.route('/api/chart', methods=['GET'])
+def api_crashes_chart() -> str:
+    cursor = mysql.get_db().cursor()
+    cursor.execute('select Number_of_Crashes, count(*) as count from Day_of_Week')
+    result = cursor.fetchall()
+    json_result = json.dumps(result)
+    resp = Response(json_result, status=200, mimetype='application/json')
+    return resp
+
 # @app.route('/edit/<int:chart_id>', methods=['GET'])
 # def chart_edit_get(chart_id):
 #     print("Labels", )
@@ -149,12 +162,48 @@ def display_chart():
 #     json_result = json.dumps(result);
 #     return render_template('chart.html', title='Chart of Crashes', dataSet=result)
 
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html', title='Register Form')
+
+@app.route('/api/login', methods=['POST'])
+def api_login() -> str:
+    email, password = request.form.get('email'), request.form.get('password')
+
 @app.route('/register', methods=['GET'])
 def register_page():
     return render_template('register.html', title='Register Form')
 
 @app.route('/api/register', methods=['POST'])
 def api_register() -> str:
+    email, password = request.form.get('email'), request.form.get('password')
+
+    # Validations here email not already registered
+    # add validation that email is in database , if not return error of some sort
+
+    # add logic to insert user into database
+    # sql_insert_query = """INSERT INTO user (email,password) VALUES (%s, %s) """
+
+    message = Mail(
+        from_email='afa48@njit.edu',
+        to_emails=email,
+        subject='Email Verification',
+        html_content=f'<strong>Hi {email}</strong>')
+    try:
+        # hardcoding for now, but please put somewhere safe
+
+        # sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        sg = SendGridAPIClient(API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
+        # If we're in this exception block then need to return error
+    # If we made it here need to redirect them to index page
+    return redirect("/", code=302)
+
 
 
 
