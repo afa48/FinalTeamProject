@@ -1,49 +1,56 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<h2> This is number of crashes</h2>
-{{dataSet[3].Number_of_Crashes}}
-
-<h2>This is from Result</h2>
-{{dataSet}}
-
 <title>Chart of Crashes</title>
-<h2>Is this thing on? ... </h2>
+<h2># of Crashes in Catalonia, Spain from 2001-2011 ... </h2>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <canvas id="myChart" width="400" height="400"></canvas>
+
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('myChart').getContext('2d')
+var option = {
+    type: 'bar',
+    data: {
+        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        datasets: [{
+            label: '# of Crashes',
+            data: [13664, 17279, 17337, 17394, 17954, 19147, 15714],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }}
 
-    list = ['a','b','c','d','e'] // all the days of the week
-
-    numberOfCrashes = []
-    var testingLength = '{{dataSet.length}}'
-    console.log("length: " + testingLength);
-    var day_week = '{{dataSet[3].Day_of_Week}}'
-    console.log(day_week)
-    var dataSet1 = '{{dataSet[0]}}' // sunday
-    var dataSet2 = '{{dataSet[1]}}' // monday
-    console.log(dataSet);
-
-    // look into getting the length of the data set
-
-    // once we get the dataset length
-        // run a for loop to get the index of the dataset
-        // grab the day of the week for each index
-        // append each day of the week to a list
-        // insert that list into chart.js javascript JSON element tag named "labels"
-    // using the same length for the dataset
-        // run a for loop to get the index of the dataset
-        // grab the number of crashes in each index
-        // append each crash record to a list
-        // insert that list into chart.js javascript JSON element tag named "data"
-
-        const chartData = {
-            labels: list,
+var ctx = document.getElementById('myChart').getContext('2d')
+var myChart = new Chart(ctx,option);
+var option = {
+    type: 'bar',
+        data: {
+            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             datasets: [{
                 label: ['# of crashes'],
-                data: [120, 17279, 17337, 17394, 17954, 19147, 15714],
+                data: [13664, 17279, 17337, 17394, 17954, 19147, 15714],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -62,8 +69,18 @@
                 ],
                 borderWidth: 1
             }]
-        }
-        const myChart = new Chart(ctx, { type: 'bar', data: chartData,});
-</script>
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }}
 
+myChart.clear();
+    console.log(crash.Day_of_Week[0])
+    var myChart = new Chart(ctx,option);
+
+</script>
 {% endblock %}
