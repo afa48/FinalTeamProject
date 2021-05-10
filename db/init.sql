@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `crash_catalonia` (
     `Number_of_Crashes` INT,
     PRIMARY KEY (`id`)
 );
+
 INSERT INTO `crash_catalonia` (Day_of_Week, Number_of_Crashes) VALUES
     ('Sunday',13664),
     ('Monday',17279),

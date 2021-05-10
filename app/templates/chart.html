@@ -1,15 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<script>
-    list = ['a','b','c','d','e'] // all the days of the week
+<h2> This is number of crashes</h2>
+{{dataSet[3].Number_of_Crashes}}
 
+<h2>This is from Result</h2>
+{{dataSet}}
+
+<title>Chart of Crashes</title>
+<h2>Is this thing on? ... </h2>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    list = ['a','b','c','d','e'] // all the days of the week
 
     numberOfCrashes = []
     var testingLength = '{{dataSet.length}}'
     console.log("length: " + testingLength);
-    var stuff = '{{dataSet[3].Day_of_Week}}'
-    console.log(stuff)
+    var day_week = '{{dataSet[3].Day_of_Week}}'
+    console.log(day_week)
     var dataSet1 = '{{dataSet[0]}}' // sunday
     var dataSet2 = '{{dataSet[1]}}' // monday
     console.log(dataSet);
@@ -27,29 +39,7 @@
         // append each crash record to a list
         // insert that list into chart.js javascript JSON element tag named "data"
 
-</script>
-
-<h2> This is number of crashes</h2>
-{{dataSet[3].Number_of_Crashes}}
-
-<h2>This is from Result</h2>
-{{dataSet}}
-
-<title>Chart of Crashes</title>
-<h2>Is this thing on? ... </h2>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<canvas id="myChart" width="400" height="400"></canvas>
-
-<script type ="text/javascript">
-
-var ctx = document.getElementById('myChart').getContext('2d');
-
-
-    var option = {
-        type: 'bar',
-        data: {
+        const chartData = {
             labels: list,
             datasets: [{
                 label: ['# of crashes'],
@@ -72,17 +62,8 @@ var ctx = document.getElementById('myChart').getContext('2d');
                 ],
                 borderWidth: 1
             }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }}
-
-
-    var myChart = new Chart(ctx,option);
-
+        }
+        const myChart = new Chart(ctx, { type: 'bar', data: chartData,});
 </script>
+
 {% endblock %}
