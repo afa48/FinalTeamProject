@@ -1,9 +1,14 @@
+import os
+
 from typing import List, Dict
 import simplejson as json
 from flask import Flask, request, Response, redirect
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
@@ -150,6 +155,7 @@ def register_page():
 
 @app.route('/api/register', methods=['POST'])
 def api_register() -> str:
+
 
 
 if __name__ == '__main__':
