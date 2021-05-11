@@ -5,3 +5,4 @@ mysql-connector
 flask-sqlalchemy
 pymysql
 sendgrid
+python-dotenv
