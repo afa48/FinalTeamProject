@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/api/register" method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="email">Email</label>
+            <input id="email" type="text" class="form-control" placeholder="email" name="email">
+        </div>
+        <div class="col">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" placeholder="password"
+                   name="password">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Register</button>
+
+</form>
+
+{% endblock %}
