@@ -4,7 +4,7 @@
 <h2># of Crashes in Catalonia, Spain from 2001-2011 ... </h2>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="myChart" width="100" height="100"></canvas>
 
 <script>
     const buildChart = (data) => {
@@ -49,7 +49,7 @@
 
         var ctx = document.getElementById('myChart').getContext('2d');
         new Chart(ctx, option);
-        ctx.height = 600;
+        ctx.height = 400;
     };
 
     //Fetch data, and pass to buildchart
