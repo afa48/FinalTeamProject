@@ -160,7 +160,18 @@ def login_page():
 @app.route('/api/login', methods=['POST'])
 def api_login() -> str:
     email, password = request.form.get('email'), request.form.get('password')
+    # Verify that email isn't already in database
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT email, password FROM user WHERE email=%s', email)
+    result = cursor.fetchall()
+    # if no account with that email return 403
+    if len(result) == 0:
+        return Response(json.dumps({'message': "Invalid email"}), status=403, mimetype='application/json')
 
+    if result[0]['password'] != password:
+        return Response(json.dumps({'message': "Invalid password"}), status=404, mimetype='application/json')
+
+    return redirect('/', code=302)
 
 @app.route('/register', methods=['GET'])
 def register_page():
