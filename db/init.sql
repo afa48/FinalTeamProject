@@ -16,4 +16,10 @@ INSERT INTO `crash_catalonia` (Day_of_Week, Number_of_Crashes) VALUES
     ('Friday',19147),
     ('Saturday',15714);
 
--- create another table here for user. (probably just id, email, password)
+
+CREATE TABLE IF NOT EXISTS `user` (
+    `id` int AUTO_INCREMENT,
+    `email` VARCHAR(100) CHARACTER SET utf8,
+    `password` VARCHAR(100) CHARACTER SET utf8,
+    PRIMARY KEY (`id`)
+);
