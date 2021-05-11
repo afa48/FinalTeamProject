@@ -58,6 +58,7 @@ def form_update_post(crash_id):
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+
 @app.route('/crashes/new', methods=['GET'])
 def form_insert_get():
     return render_template('new.html', title='New Crash Form')
@@ -71,6 +72,7 @@ def form_insert_post():
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
+
 
 @app.route('/delete/<int:crash_id>', methods=['POST'])
 def form_delete_post(crash_id):
