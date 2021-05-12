@@ -6,7 +6,7 @@ an email verification process.
 ## Team Members and link to project
 Azra Awan and Dalitza Sanchez
 
-<h3> [Final Team Project](https://github.com/afa48/FinalTeamProject/tree/master)</h3>
+###[Final Team Project](https://github.com/afa48/FinalTeamProject/tree/master)
 
 # Project Description 
 This team project teaches us how to setup Pycharm with Docker, Flask, and MySQL using csv data.
