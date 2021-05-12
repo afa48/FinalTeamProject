@@ -1,9 +1,17 @@
+import os
+
 from typing import List, Dict
 import simplejson as json
 from flask import Flask, request, Response, redirect
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import logging
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
@@ -25,13 +33,13 @@ def index():
     return render_template('index.html', title='Home', user=user, crashes=result)
 
 
+
 @app.route('/view/<int:crash_id>', methods=['GET'])
 def record_view(crash_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM crash_catalonia WHERE id=%s', crash_id)
     result = cursor.fetchall()
     return render_template('view.html', title='View Form', crash=result[0])
-
 
 @app.route('/edit/<int:crash_id>', methods=['GET'])
 def form_edit_get(crash_id):
@@ -129,6 +137,77 @@ def api_delete(crash_id) -> str:
     mysql.get_db().commit()
     resp = Response(status=200, mimetype='application/json')
     return resp
+
+@app.route('/view/chart', methods=['GET'])
+def display_chart():
+    return render_template('chart.html', title='Chart of Crashes')
+
+@app.route('/view/chart1', methods=['GET'])
+def display_chart1():
+    return render_template('chart1.html', title='Chart')
+
+@app.route('/api/chart', methods=['GET'])
+def api_crashes_chart() -> str:
+    cursor = mysql.get_db().cursor()
+    cursor.execute('select Number_of_Crashes, count(*) as count from Day_of_Week')
+    result = cursor.fetchall()
+    json_result = json.dumps(result)
+    resp = Response(json_result, status=200, mimetype='application/json')
+    return resp
+
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html', title='Register Form')
+
+@app.route('/api/login', methods=['POST'])
+def api_login() -> str:
+    email, password = request.form.get('email'), request.form.get('password')
+    # Verify that email isn't already in database
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT email, password FROM user WHERE email=%s', email)
+    result = cursor.fetchall()
+    # if no account with that email return 403
+    if len(result) == 0:
+        return Response(json.dumps({'message': "Invalid email"}), status=403, mimetype='application/json')
+
+    if result[0]['password'] != password:
+        return Response(json.dumps({'message': "Invalid password"}), status=404, mimetype='application/json')
+
+    return redirect('/', code=302)
+
+@app.route('/register', methods=['GET'])
+def register_page():
+    return render_template('register.html', title='Register Form')
+
+@app.route('/api/register', methods=['POST'])
+def api_register() -> str:
+    email, password = request.form.get('email').strip(), request.form.get('password').strip()
+
+    # Verify that email isn't already in database
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT COUNT(*) as ct FROM user WHERE email=%s', email)
+    result = cursor.fetchall()
+    if result[0]['ct'] != 0:
+        return Response(json.dumps({message: "Email already registered"}), status=404, mimetype='application/json')
+    #Add user to database
+    sql_insert_query = """INSERT INTO user (email,password) VALUES (%s, %s) """
+    cursor.execute(sql_insert_query, (email, password))
+    mysql.get_db().commit()
+
+    message = Mail(
+        from_email='afa48@njit.edu',
+        to_emails=email,
+        subject='Email Verification',
+        html_content=f'<strong>Hi {email}</strong>')
+    try:
+        # hardcoding for now, but please put somewhere safe
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API'))
+        response = sg.send(message)
+        logger.info('Sendgrid', response)
+        return redirect("/", code=302)
+    except Exception as e:
+        logger.error('Sendgrid Error', e)
+        return Response(json.dumps({'message': e.message}), status=404, mimetype='application/json')
 
 
 if __name__ == '__main__':
