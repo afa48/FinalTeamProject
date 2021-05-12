@@ -39,7 +39,6 @@ Once logged in, you will be redirected to the homepage.
 During Registration and Login process, the server will validate your input and send back error messages if information is incorrect. 
 Please observe network tab in your browser for any error messages. 
 
-![confirmed](screenshots/email_verification.png)
 
 This screenshot shows the image of invalid or incorrect password response from the application.  
 
