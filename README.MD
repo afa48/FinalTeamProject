@@ -13,6 +13,7 @@ This team project teaches us how to setup Pycharm with Docker, Flask, and MySQL 
 Once our data was setup, we developed the following two features:
 
 I. Add a chart from chart.js to incorporate our api data from the json endpoints. 
+
 II. Create a login and registration process that includes email verification from SendGrid. 
 
 Installation Instructions for Using the App with Docker:
