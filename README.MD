@@ -5,6 +5,7 @@ an email verification process.
 
 ## Team Members and link to project
 Azra Awan and Dalitza Sanchez
+
 [Final Team Project](https://github.com/afa48/FinalTeamProject/tree/master)
 
 # Project Description 
